@@ -708,13 +708,13 @@ class RepositorySpec: FixturesSpec {
 
 				let status = repo.status()
 				expect(status.value?.count).to(equal(1))
-				expect(status.value!.first!.status).to(equal(.workTreeModified))
+				expect(status.value!.first!.status).to(equal(.modified))
 
 				expect(repo.add(path: "README.md").error).to(beNil())
 
 				let newStatus = repo.status()
 				expect(newStatus.value?.count).to(equal(1))
-				expect(newStatus.value!.first!.status).to(equal(.indexModified))
+				expect(newStatus.value!.first!.status).to(equal(.modified))
 			}
 
 			it("Should add an untracked file under a path") {
@@ -731,7 +731,7 @@ class RepositorySpec: FixturesSpec {
 
 				let newStatus = repo.status()
 				expect(newStatus.value?.count).to(equal(1))
-				expect(newStatus.value!.first!.status).to(equal(.indexNew))
+                expect(newStatus.value!.first!.status).to(equal(.added))
 			}
 		}
 

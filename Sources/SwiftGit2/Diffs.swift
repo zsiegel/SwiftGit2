@@ -40,7 +40,28 @@ public struct Diff {
 		public var newFile: File?
 
 		public init(_ delta: git_diff_delta) {
-			self.status = Status(rawValue: UInt32(git_diff_status_char(delta.status)))
+            switch delta.status.rawValue {
+            case 63:
+                self.status = Status.untracked
+            case 65:
+                self.status = Status.added
+            case 67:
+                self.status = Status.copied
+            case 68:
+                self.status = Status.deleted
+            case 73:
+                self.status = Status.ignored
+            case 77:
+                self.status = Status.modified
+            case 82:
+                self.status = Status.renamed
+            case 84:
+                self.status = Status.typeChange
+            case 88:
+                self.status = Status.unreadable
+            default:
+                self.status = Status.none
+            }
 			self.flags = Flags(rawValue: delta.flags)
 			self.oldFile = File(delta.old_file)
 			self.newFile = File(delta.new_file)
@@ -70,6 +91,7 @@ public struct Diff {
 		}
 		public let rawValue: UInt32
 
+        public static let none     = Status([])
 		public static let unmodified     = Status(rawValue: GIT_DELTA_UNMODIFIED.rawValue)
 		public static let added          = Status(rawValue: GIT_DELTA_ADDED.rawValue)
 		public static let deleted        = Status(rawValue: GIT_DELTA_DELETED.rawValue)
@@ -80,7 +102,6 @@ public struct Diff {
 		public static let untracked      = Status(rawValue: GIT_DELTA_UNTRACKED.rawValue)
 		public static let typeChange     = Status(rawValue: GIT_DELTA_TYPECHANGE.rawValue)
 		public static let unreadable     = Status(rawValue: GIT_DELTA_UNREADABLE.rawValue)
-		public static let conflicted     = Status(rawValue: GIT_DELTA_CONFLICTED.rawValue)
 	}
 
 	public struct Flags: OptionSet {

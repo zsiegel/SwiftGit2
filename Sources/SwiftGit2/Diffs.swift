@@ -41,7 +41,11 @@ public struct Diff {
 
 		public init(_ delta: git_diff_delta) {
             let char = git_diff_status_char(delta.status)
-            print("DEBUG: Status is \(char)")
+            print("DEBUG: Status raw is \(delta.status)")
+            print("DEBUG: Char status is \(char)")
+            print("DEBUG: GIT_DELTA_MODIFIED is \(GIT_DELTA_MODIFIED.rawValue)")
+            print("DEBUG: STATUS is \(Status(rawValue: delta.status.rawValue))")
+            
             switch char {
             case 63:
                 self.status = Status.untracked

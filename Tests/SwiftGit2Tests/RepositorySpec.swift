@@ -10,8 +10,23 @@ import Foundation
 import SwiftGit2
 import Nimble
 import Quick
+import Clibgit2
 
 // swiftlint:disable cyclomatic_complexity
+
+class DiffSpec: FixturesSpec {
+    override func spec() {
+        describe("testing 123") {
+            
+            it("should fail if the repo doesn't exist") {
+                let url = URL(fileURLWithPath: "/Users/zsiegel/src/gitlab.com/zsiegel.com")
+                let result = Repository.at(url)
+                print("Status \(GIT_DELTA_MODIFIED)")
+                print("DONE")
+            }
+        }
+    }
+}
 
 class RepositorySpec: FixturesSpec {
 	override func spec() {

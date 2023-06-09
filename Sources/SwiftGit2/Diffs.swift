@@ -40,7 +40,9 @@ public struct Diff {
 		public var newFile: File?
 
 		public init(_ delta: git_diff_delta) {
-            switch delta.status.rawValue {
+            let char = git_diff_status_char(delta.status)
+            print("DEBUG: Status is \(char)")
+            switch char {
             case 63:
                 self.status = Status.untracked
             case 65:
